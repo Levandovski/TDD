@@ -1,0 +1,10 @@
+Instruções para realizar os teste de TDD:
+
+Exibe os dados que deram certo ou não, porém sem formatação.
+
+phpunit --debug alunoTest.php
+
+Exibe os dados formatados e o que deu certo tem X marcado.
+
+phpunit --debug --testdox alunoTest.php
+
