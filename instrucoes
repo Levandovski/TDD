@@ -8,3 +8,63 @@ Exibe os dados formatados e o que deu certo tem X marcado.
 
 phpunit --debug --testdox alunoTest.php
 
+O comando --tap imprime os métodos e os relacionam com sua classe de forma numerada
+
+phpunit --debug --tap alunoTest.php
+
+Este último apenas imprime a informação com cores: cor vermelha para testes que falharam e cor verde para os bem-sucedidos.
+
+phpunit --debug --colors alunoTest.php
+
+
+
+
+Além de executar testes um a um na linha de comando, o PHPUnit possui uma funcionalidade chamada de testsuite, que é usada para executarmos vários deles ao mesmo tempo.
+
+O testsuite pode ser executado de duas maneiras:
+
+Essa é a forma mais simples: pela linha de comando é preciso apontar o executor de testes para o diretório que contém os arquivos a serem testados, como mostra o exemplo a seguir:
+
+Phpunit  --bootstrap vendor/autoload.php tests
+O comando --bootstrap está apontando o executor do PHPUnit para o diretório tests, que contém todos os arquivos de teste, assim todos os arquivos serão testados em lote.
+
+A outra forma é através de um arquivo XML, como mostra o exemplo da Listagem 8.
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpunit>
+    <testsuites>
+     <testsuite name="Exemplo de suíte de testes">
+     <directory> ./tests/</directory>
+     </testsuite>
+    </testsuites>
+</phpunit>
+Listagem 8. Testsuites com XML
+O arquivo XML passa como parâmetro o diretório dentro das tags . Isso significa que todos os arquivos que estiverem dentro deste diretório serão testados.Para executarmos o arquivo XML no terminal, basta digitarmos o seguinte comando:
+
+Phpunit –configuration diretorio/arquivo.xml
+Caso queira executar arquivos específicos dentro da testsuite, basta incluir no arquivo xml a tag , passando como parâmetro o diretório completo do arquivo, acompanhado de sua extensão .php, como mostra a Listagem 9.
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpunit>
+   <testsuites>
+     <testsuite name="Exemplo de suíte de testes">
+     <file> ./tests/Application/Exemplo/alunoTest.php</file>
+   </testsuite>
+   </testsuites>
+</phpunit>
+Listagem 9. Testsuites com arquivos específicos
+Perceba que as tags foram retiradas. Em contrapartida, foram adicionadas as tags.
+
+Pulando arquivos da suíte de testes
+Se por algum motivo quisermos que determinado arquivo dentro de nosso diretório não seja testado, basta usarmos a tag , passando o diretório completo do arquivo .php, como mostra o exemplo da Listagem 10.
+
+  <?xml version="1.0" encoding="UTF-8" ?>
+    <phpunit>
+  <testsuites>
+      <testsuite name="Exemplo de suíte de testes">
+        <directory> ./tests/ </directory>
+        <exlude> ./tests/Application/Exemplo/alunoDAOTest.php</exclude>
+      </testsuite>
+  </testsuites>
+</phpunit>
+Listagem 10. Pulando arquivos
+Com isso, o arquivo passado entre as tags será mantido no diretório, mas não será incluído nos testes.
